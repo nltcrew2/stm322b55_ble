@@ -1,0 +1,49 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug - OpenOCD (STM32WB55)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+
+            "// executable_auto": "Use ${command:cmake.launchTargetPath} if CMake Tools is configured correctly",
+            "// executable_fixed": "Or use a fixed ELF path",
+            "executable": "${workspaceFolder}/build/STM32PROJECT.elf",
+
+            "servertype": "openocd",
+            "device": "STM32WB55RGV6",
+            "interface": "swd",
+            "serialNumber": "",
+            "runToEntryPoint": "main",
+            "v1": false,
+            "showDevDebugOutput": "both",
+
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 1
+            },
+
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32wbx.cfg"
+            ],
+
+            "swoConfig": {
+                "enabled": true,
+                "source": "probe",
+                "swoFrequency": 2000000,
+                "cpuFrequency": 32000000,
+                "decoders": [
+                    {
+                        "port": 0,
+                        "type": "console",
+                        "encoding": "ascii",
+                        "label": "ITM",
+                        "showOnStartup": true
+                    }
+                ]
+            }
+        }
+    ]
+}
