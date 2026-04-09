@@ -27,6 +27,26 @@ if(NOT EXISTS ${LINKER_SCRIPT})
 endif()
 
 # =========================================================
+# Helper: collect all subdirectories recursively
+# =========================================================
+function(collect_subdirectories result base_dir)
+    set(dir_list ${base_dir})
+
+    file(GLOB_RECURSE children LIST_DIRECTORIES true "${base_dir}/*")
+
+    foreach(child ${children})
+        if(IS_DIRECTORY ${child})
+            list(APPEND dir_list ${child})
+        endif()
+    endforeach()
+
+    list(REMOVE_DUPLICATES dir_list)
+    set(${result} ${dir_list} PARENT_SCOPE)
+endfunction()
+
+collect_subdirectories(LIB_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Lib)
+
+# =========================================================
 # Source files
 # =========================================================
 file(GLOB ROOT_C_SRC
@@ -69,6 +89,10 @@ file(GLOB_RECURSE LIB_C_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/Lib/*.c
 )
 
+file(GLOB_RECURSE LIB_CPP_SRC
+    ${CMAKE_CURRENT_SOURCE_DIR}/Lib/*.cpp
+)
+
 file(GLOB_RECURSE WPAN_APP_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/STM32_WPAN/App/*.c
 )
@@ -93,6 +117,7 @@ set(SRC_PATHS
     ${TASK_C_SRC}
     ${TASK_CPP_SRC}
     ${LIB_C_SRC}
+    ${LIB_CPP_SRC}
     ${WPAN_APP_SRC}
     ${WPAN_TARGET_SRC}
     ${ASM_SRC}
@@ -106,7 +131,7 @@ set(INC_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/Core/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/App
     ${CMAKE_CURRENT_SOURCE_DIR}/Tasks
-    ${CMAKE_CURRENT_SOURCE_DIR}/Lib/log
+    ${LIB_INCLUDE_DIRS}
 
     ${CMAKE_CURRENT_SOURCE_DIR}/STM32_WPAN/App
     ${CMAKE_CURRENT_SOURCE_DIR}/STM32_WPAN/Target
@@ -115,6 +140,7 @@ set(INC_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/${MCU_FAMILY}_HAL_Driver/Inc/Legacy
     ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Include
     ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CMSIS/Include
+    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CMSIS/RTOS2/Include
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/Third_Party/FreeRTOS/Source/include
     ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2

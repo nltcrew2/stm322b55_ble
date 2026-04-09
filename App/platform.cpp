@@ -1,7 +1,7 @@
 #include "platform.h"
 #include "cmsis_os2.h"
-#include "WhoAmITask.h"
 #include "LedTask.h"
+#include "BleTask.h"
 #include <stdio.h>
 
 volatile int g_platform_entered = 0;
@@ -13,7 +13,7 @@ extern "C" void startPlatform(void *argument)
     g_platform_entered = 1;
     printf("startPlatform begin\r\n");
 
-    WhoAmITask::start();
+    BleTask::start();
     LedTask::start();
 
     printf("startPlatform done\r\n");
