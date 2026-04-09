@@ -14,7 +14,8 @@
 #include <cstdint>
 #include <cstring>
 
-extern "C" {
+extern "C"
+{
 
 void APP_BLE_Init(void);
 void hci_notify_asynch_evt(void *p_Data);
@@ -31,10 +32,10 @@ extern uint16_t gap_appearance_char_handle;
 class BluetoothCore
 {
 public:
-    static BluetoothCore& Instance();
+    static BluetoothCore &Instance();
 
-    BluetoothCore(const BluetoothCore&) = delete;
-    BluetoothCore& operator=(const BluetoothCore&) = delete;
+    BluetoothCore(const BluetoothCore &) = delete;
+    BluetoothCore &operator=(const BluetoothCore &) = delete;
 
     void Init();
 
@@ -45,22 +46,24 @@ public:
     bool IsReady() const;
     bool IsConnected() const;
 
-    const char* GetName() const;
-    void SetName(const char* newName);
+    void SetTxPower(int8_t dBm);
+
+    const char *GetName() const;
+    void SetName(const char *newName);
 
     uint16_t ConnectionHandle() const;
 
-    bool Send(const uint8_t* data, uint8_t len);
-    bool SendText(const char* text);
+    bool Send(const uint8_t *data, uint8_t len);
+    bool SendText(const char *text);
 
     bool HasNewRxData() const;
-    uint8_t GetRxData(uint8_t* out, uint8_t maxLen);
+    uint8_t GetRxData(uint8_t *out, uint8_t maxLen);
     void ClearRxData();
 
     static void NotifyAsyncEvent();
     static void ReleaseCmdSemaphore();
     static void WaitCmdSemaphore();
-    static SVCCTL_UserEvtFlowStatus_t HandleSvcEvent(void* p_Pckt);
+    static SVCCTL_UserEvtFlowStatus_t HandleSvcEvent(void *p_Pckt);
 
 private:
     BluetoothCore() = default;
@@ -73,37 +76,39 @@ private:
     void InitCustomService();
     void UpdateDeviceAddress();
 
-    static void HciUserEventProcessThread(void* argument);
+    static void HciUserEventProcessThread(void *argument);
     static void HciStatusCallback(HCI_TL_CmdStatus_t status);
-    static void BridgeEventCallback(void* payload);
-    static void EventCallback(void* packet);
+    static void BridgeEventCallback(void *payload);
+    static void EventCallback(void *packet);
 
 private:
     static constexpr uint32_t kHciEventNotifyFlag = 0x00000001;
-    static constexpr size_t   kNameMaxLength      = 16;
-    static constexpr uint8_t  kMaxCharValueLength = 20;
+    static constexpr size_t kNameMaxLength = 16;
+    static constexpr uint8_t kMaxCharValueLength = 20;
 
-    inline static osMutexId_t     mutexHciId = nullptr;
-    inline static osMutexId_t     mutexBleId = nullptr;
+    inline static osMutexId_t mutexHciId = nullptr;
+    inline static osMutexId_t mutexBleId = nullptr;
     inline static osSemaphoreId_t semaphoreHciId = nullptr;
-    inline static osThreadId_t    hciUserEventProcessThreadId = nullptr;
+    inline static osThreadId_t hciUserEventProcessThreadId = nullptr;
 
-    inline static bool     ready = false;
-    inline static bool     connected = false;
+    inline static bool ready = false;
+    inline static bool connected = false;
     inline static uint16_t connectionHandle = 0;
 
     inline static uint8_t deviceAddress[6] = {0};
 
     inline static char deviceName[kNameMaxLength + 1] = "STM32WB_BLE";
+
+    // advertising local name field: [AD_TYPE][name...]
     inline static uint8_t advName[kNameMaxLength + 2] = {0};
 
     inline static uint16_t customServiceHandle = 0;
-    inline static uint16_t customTxCharHandle  = 0;
-    inline static uint16_t customRxCharHandle  = 0;
+    inline static uint16_t customTxCharHandle = 0;
+    inline static uint16_t customRxCharHandle = 0;
 
     inline static uint8_t rxBuffer[kMaxCharValueLength] = {0};
     inline static uint8_t rxLength = 0;
-    inline static bool    rxUpdated = false;
+    inline static bool rxUpdated = false;
 };
 
 #endif // BLUETOOTH_CORE_H

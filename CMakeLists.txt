@@ -65,6 +65,12 @@ file(GLOB_RECURSE MIDDLEWARE_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/*.c
 )
 
+list(REMOVE_ITEM MIDDLEWARE_SRC
+    ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/ST/STM32_WPAN/utilities/dbg_trace.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/ST/STM32_WPAN/ble/svc/Src/hrs.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/ST/STM32_WPAN/ble/svc/Src/dis.c
+)
+
 file(GLOB_RECURSE UTILITIES_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/*.c
 )
@@ -104,6 +110,22 @@ file(GLOB_RECURSE WPAN_TARGET_SRC
 file(GLOB_RECURSE ASM_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/Core/Startup/*.s
     ${CMAKE_CURRENT_SOURCE_DIR}/Core/Startup/*.S
+)
+
+# =========================================================
+# Remove conflicting ST default BLE app files
+# =========================================================
+list(REMOVE_ITEM WPAN_APP_SRC
+    ${CMAKE_CURRENT_SOURCE_DIR}/STM32_WPAN/App/app_ble.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/STM32_WPAN/App/dis_app.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/STM32_WPAN/App/hrs_app.c
+)
+
+# =========================================================
+# Remove duplicate _write implementation
+# =========================================================
+list(REMOVE_ITEM MIDDLEWARE_SRC
+    ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/ST/STM32_WPAN/utilities/dbg_trace.c
 )
 
 set(SRC_PATHS
