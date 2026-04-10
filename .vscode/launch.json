@@ -12,7 +12,7 @@
             "executable": "${workspaceFolder}/build/STM32PROJECT.elf",
 
             "servertype": "openocd",
-            "device": "STM32WB55RGV6",
+            "device": "STM32WB55CGU6",
             "interface": "swd",
             "serialNumber": "",
             "runToEntryPoint": "main",

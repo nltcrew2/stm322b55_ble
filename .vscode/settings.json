@@ -52,12 +52,10 @@
     },
     "C_Cpp.default.compilerPath": "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2021.10/bin/arm-none-eabi-gcc.exe",
     "cmake.cmakePath": "cube-cmake",
-    "cmake.configureArgs": [
-        "-DCMAKE_COMMAND=cube-cmake"
-    ],
     "cmake.preferredGenerators": [
         "Ninja"
     ],
-    "cmake.options.statusBarVisibility": "visible"
+    "cmake.options.statusBarVisibility": "visible",
+    "cmake.buildBeforeRun": false,
+    "debug.onTaskErrors": "debugAnyway"
 }
-
