@@ -10,7 +10,7 @@ static void bleThread(void *argument)
 {
     (void)argument;
 
-    BluetoothCore::Instance().Init();
+    // BluetoothCore::Instance().Init();
     BluetoothCore::Instance().SetName("WB55_TEST");
 
     uint32_t counter = 0;

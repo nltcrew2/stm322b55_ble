@@ -20,7 +20,7 @@ static void ledThread(void *argument)
         HAL_GPIO_WritePin(LED_GPIO, LED_PIN, LED_OFF_STAT);
         osDelay(1000);
 
-        log_info("led on");
+        // log_info("led on");
     }
 }
 
