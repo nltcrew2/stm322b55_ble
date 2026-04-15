@@ -3,20 +3,24 @@
 #include "LedTask.h"
 #include "BleTask.h"
 #include <stdio.h>
+#include "log.h"
 
-volatile int g_platform_entered = 0;
+
 
 extern "C" void startPlatform(void *argument)
 {
     (void)argument;
 
-    g_platform_entered = 1;
-    printf("startPlatform begin\r\n");
+  
+    log_info("startPlatform begin");
 
     BleTask::start();
+    printf("1\r\n");
     LedTask::start();
+    printf("2\r\n");
 
-    printf("startPlatform done\r\n");
+    log_info("startPlatform done");
 
     osThreadExit();
+    printf("3\r\n");
 }

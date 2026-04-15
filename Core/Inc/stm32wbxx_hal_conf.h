@@ -34,7 +34,7 @@
   * @brief This is the list of modules to be used in the HAL driver
   */
 #define HAL_MODULE_ENABLED
-#define HAL_ADC_MODULE_ENABLED
+/*#define HAL_ADC_MODULE_ENABLED   */
 /*#define HAL_CRYP_MODULE_ENABLED   */
 /*#define HAL_COMP_MODULE_ENABLED   */
 /*#define HAL_CRC_MODULE_ENABLED   */
@@ -84,7 +84,7 @@
 #define USE_HAL_SPI_REGISTER_CALLBACKS       0u
 #define USE_HAL_TIM_REGISTER_CALLBACKS       0u
 #define USE_HAL_TSC_REGISTER_CALLBACKS       0u
-#define USE_HAL_UART_REGISTER_CALLBACKS      0u
+#define USE_HAL_UART_REGISTER_CALLBACKS      1u
 #define USE_HAL_USART_REGISTER_CALLBACKS     0u
 #define USE_HAL_WWDG_REGISTER_CALLBACKS      0u
 

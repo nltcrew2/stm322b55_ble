@@ -54,5 +54,14 @@ void BleTask::start()
         .priority   = osPriorityNormal,
     };
 
-    osThreadNew(bleThread, nullptr, &bleTaskAttr);
+    osThreadId_t tid = osThreadNew(bleThread, nullptr, &bleTaskAttr);
+
+    if (tid == nullptr)
+    {
+        log_info("ble task create failed\r\n");
+    }
+    else
+    {
+        log_info("ble task create success\r\n");
+    }
 }

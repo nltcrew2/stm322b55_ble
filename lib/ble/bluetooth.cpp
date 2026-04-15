@@ -562,11 +562,11 @@ void BluetoothCore::HciStatusCallback(HCI_TL_CmdStatus_t status)
     switch (status)
     {
         case HCI_TL_CmdBusy:
-            osMutexAcquire(mutexHciId, osWaitForever);
+            // osMutexAcquire(mutexHciId, osWaitForever);
             break;
 
         case HCI_TL_CmdAvailable:
-            osMutexRelease(mutexHciId);
+            // osMutexRelease(mutexHciId);
             break;
 
         default:
